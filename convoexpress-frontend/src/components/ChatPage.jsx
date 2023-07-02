@@ -119,8 +119,6 @@ const ChatPage = () => {
                 offLine[person._id] = person
             });
             setOfflineUser(offLine);
-            console.log('offlinearray', offLinePeopleArray)
-            console.log('offlineobject',offLine)
         };
         fetchPeople();
     },[onlineUser]);

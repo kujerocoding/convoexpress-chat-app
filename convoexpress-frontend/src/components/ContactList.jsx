@@ -10,7 +10,7 @@ const ContactList = () => {
     const excludeLoggedInUser = {...onlineUser};
     delete excludeLoggedInUser[id];
 
-    const handleClick = (userId, username) => {
+    const selectContact = (userId, username) => {
         setSelectedContactId(userId)
         setSelectedContact(username)
     }
@@ -23,7 +23,7 @@ const ContactList = () => {
                 <div 
                 key={userId} 
                 className={`${selectedContactId === userId ? 'bg-contactBG': '' } flex py-2 items-center gap-4 cursor-pointer border-t border-gray-700`}
-                onClick={() => handleClick(userId, onlineUser[userId])}
+                onClick={() => selectContact(userId, onlineUser[userId])}
                 >
                     <Avatar username={onlineUser[userId]}/>
                 </div>

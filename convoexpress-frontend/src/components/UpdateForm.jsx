@@ -8,7 +8,6 @@ const UpdateForm = () => {
   const [password, setPassword] = useState('');
   const {id, setUsername:setLoggedinUsername} = useGlobalContext();
   const [result, setResult] = useState(null)
-  console.log(id)
 
   const updateUser = async () => {
     try {

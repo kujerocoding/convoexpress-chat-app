@@ -2,7 +2,9 @@ import React from 'react'
 import { useGlobalContext } from '../context/global'
 
 const ContactHeader = () => {
-    const {username} = useGlobalContext()
+
+    const {username} = useGlobalContext();
+    
   return (
     <div>
         <div className='flex gap-2 text-accent items-center justify-center py-4 font-bold'>

@@ -17,7 +17,7 @@ const {username, setUsername, id, setId} = useGlobalContext()
     setInputState({...inputState, [e.target.name]: e.target.value})
   }
 
-  const handleSubmit = async (e) => {
+  const registerUser = async (e) => {
     e.preventDefault()
     try{
       const {data} = await axios.post('/api/register', {...inputState})
@@ -33,7 +33,7 @@ const {username, setUsername, id, setId} = useGlobalContext()
     <h1 className='text-3xl text-white font-bold'>Signup to ConvoExpress</h1>
     <form 
     className='w-1/2 flex flex-col gap-5'
-    onSubmit={handleSubmit}
+    onSubmit={registerUser}
     >
         <input 
         className='text-white caret-inherit p-2 bg-secondary' 

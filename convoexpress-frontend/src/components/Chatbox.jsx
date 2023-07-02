@@ -3,7 +3,7 @@ import { useGlobalContext } from '../context/global'
 
 const Chatbox = ({messagesWithoutDuplicate}) => {
 
-    const {id, selectedContactId} = useGlobalContext()
+    const {id, selectedContactId} = useGlobalContext();
 
   return (
     <>
