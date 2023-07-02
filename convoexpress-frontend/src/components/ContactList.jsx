@@ -25,8 +25,7 @@ const ContactList = () => {
                 className={`${selectedContactId === userId ? 'bg-contactBG': '' } flex py-2 items-center gap-4 cursor-pointer border-t border-gray-700`}
                 onClick={() => handleClick(userId, onlineUser[userId])}
                 >
-                    <Avatar username={onlineUser[userId]} userId={userId}/>
-                    <p className='capitalize'>{onlineUser[userId]}</p>
+                    <Avatar username={onlineUser[userId]}/>
                 </div>
             )}
         </div>

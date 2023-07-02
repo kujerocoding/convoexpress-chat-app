@@ -5,13 +5,14 @@ export const GlobalContext = createContext({});
 
 export const GlobalContextProvider = ({children}) => {
 
-    const [username, setUsername] = useState(null)
-    const [id, setId] = useState(null)
-    const [onlineUser, setOnlineUser] = useState([])
-    const [selectedContactId, setSelectedContactId] = useState(null)
-    const [selectedContact, setSelectedContact] = useState(null)
-    const [ws, setWs] = useState(null)
-    const [showUpdateForm, setShowUpdateForm] = useState(false)
+    const [username, setUsername] = useState(null);
+    const [id, setId] = useState(null);
+    const [onlineUser, setOnlineUser] = useState([]);
+    const [selectedContactId, setSelectedContactId] = useState(null);
+    const [selectedContact, setSelectedContact] = useState(null);
+    const [ws, setWs] = useState(null);
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
+    const [inputMessage, setInputMessage] = useState('');
 
     useEffect(() => {
         const fetchProfile = async () =>{
@@ -42,7 +43,9 @@ export const GlobalContextProvider = ({children}) => {
             ws,
             setWs,
             showUpdateForm,
-            setShowUpdateForm
+            setShowUpdateForm,
+            inputMessage,
+            setInputMessage
             
 
         }}>{children}</GlobalContext.Provider>
