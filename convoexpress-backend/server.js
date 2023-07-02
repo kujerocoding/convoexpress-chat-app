@@ -1,27 +1,27 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const cors = require('cors')
-const app = express()
-const dotenv = require('dotenv')
-const jwt = require('jsonwebtoken')
-const User = require('./models/User')
-const cookieParser = require('cookie-parser')
-const bcrypt = require('bcryptjs')
-const websocket = require('ws')
-const Message = require('./models/Message')
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const app = express();
+const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken');
+const User = require('./models/User');
+const Message = require('./models/Message');
+const cookieParser = require('cookie-parser');
+const bcrypt = require('bcryptjs');
+const websocket = require('ws');
 
-dotenv.config()
+dotenv.config();
 app.use(cors({
     credentials: true,
     origin: process.env.CLIENT_URL
-}))
-app.use(express.json())
-app.use(cookieParser())
-const port = process.env.PORT
-const jwtKey = process.env.JWT_KEY
-const salt = bcrypt.genSaltSync(15)
+}));
+app.use(express.json());
+app.use(cookieParser());
+const port = process.env.PORT;
+const jwtKey = process.env.JWT_KEY;
+const salt = bcrypt.genSaltSync(15);
 
-mongoose.connect(process.env.MONGODB_URL)
+mongoose.connect(process.env.MONGODB_URL);
 
 const getUserDataFromRequest = (req) => {
     return new Promise ((resolve,reject) => {
@@ -35,10 +35,9 @@ const getUserDataFromRequest = (req) => {
         reject('No token')
     }
     })
-}
+};
 
 app.get('/api/profile', async(req,res) => {
-    
     const token = req.cookies?.token;
     if(token){
         jwt.verify(token, jwtKey, {}, (err, userData) => {
@@ -48,8 +47,8 @@ app.get('/api/profile', async(req,res) => {
     }else{
         res.status(401).json({error: 'No token'})
     }
-})
-//3:35 TS
+});
+
 app.get('/api/messages/:userId', async (req,res) => {
     const {userId} = req.params
     const userData = await getUserDataFromRequest(req)
@@ -78,7 +77,8 @@ app.post('/api/login', async (req,res) => {
         jwt.sign({userId:foundUser._id, username}, jwtKey, {}, (err,token) => {
             res.cookie('token', token, {sameSite: 'none', secure: true}).json({
                 id: foundUser._id,
-                username: foundUser.username
+                username: foundUser.username,
+                message: 'Logging in...'
             });
         });
         
@@ -116,15 +116,12 @@ app.put('/api/update/:userId', async (req, res) => {
     try {
       const userId = req.params.userId;
       const { username, password } = req.body;
-  
       const updatedUser = await User.findByIdAndUpdate(userId, { username, password }, { new: true });
-  
       if (!updatedUser) {
         return res.status(404).json({ message: 'User not found' });
       }else{
-        return res.send('User updated successfully')
+        return res.send('User updated successfully');
       }
-  
      
     } catch (error) {
       console.error('Error updating user:', error);
@@ -165,21 +162,7 @@ wss.on('connection', (connection, req) => {
                 }))
             }))
         })
-    }
-
-    //4:32 TS
-   /*  connection.isAlive = true;
-
-    connection.timer = setInterval(() => {
-        connection.ping();
-        connection.deathTimer = setTimeout(() => {
-            connection.isAlive = false;
-            clearInterval(connection.timer);
-            connection.terminate();
-            notifyAboutOnlineUser();
-            console.log('dead');
-        },1000);
-    },5000); */
+    };
 
     // Function to handle the death of the connection
     const handleConnectionDeath = () => {
@@ -229,8 +212,6 @@ wss.on('connection', (connection, req) => {
                 text
             });
 
-           
-
             [...wss.clients].filter(client => client.userId === recipient).map(c => c.send(JSON.stringify({
                 text,
                 sender: connection.userId,
@@ -242,8 +223,4 @@ wss.on('connection', (connection, req) => {
     });
 
     notifyAboutOnlineUser();
-})
-
-wss.on('close', data => {
-    console.log('disconnect', data);
 });

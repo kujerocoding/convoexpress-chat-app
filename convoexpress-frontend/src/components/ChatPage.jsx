@@ -1,45 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef} from 'react'
 import { useGlobalContext } from '../context/global'
 import Avatar from './Avatar'
-import {uniqBy} from 'lodash'
+
 import axios from 'axios'
-import UpdateForm from './UpdateForm'
 import ContactList from './ContactList'
 import ContactHeader from './ContactHeader'
 import AccountSettings from './AccountSettings'
 import Chatbox from './Chatbox'
 
 const ChatPage = () => {
-    
-    const {username, 
+
+    const { 
         id, 
-        setUsername, 
-        setId, 
         selectedContactId, 
         onlineUser, 
         selectedContact,
         setOnlineUser,
         ws,
         setWs,
-        showUpdateForm,
         inputMessage,
-        setInputMessage
+        messages,
+        setMessages,
+        setInputMessage,
+        setOfflineUser
      } = useGlobalContext()
-    //const [ws, setWs] = useState(null)
-    //const [onlineUser, setOnlineUser] = useState([])
-    const [offlineUser, setOfflineUser] = useState([])
-    //const [selectedContactId, setSelectedContactId] = useState(null)
-    //const [inputMessage, setInputMessage] = useState('')
-    const [messages, setMessages] = useState([])
-    const divBelowMessages = useRef()
-    //const [selectedContact, setSelectedContact] = useState(null)
-    //const [showUpdateForm, setShowUpdateForm] = useState(false)
-    
-    
+
+    const divBelowMessages = useRef();
     
 
     useEffect(() => {
-        connectToWebSocket()
+        connectToWebSocket();
     }, [selectedContactId])
 
     const connectToWebSocket = async () => {
@@ -52,15 +42,15 @@ const ChatPage = () => {
                 connectToWebSocket();
             }, 1000)
         })
-    }
+    };
 
     const showOnline = (peopleArray) => {
         const people = {};
         peopleArray.forEach(({userId, username}) => {
             people[userId] = username
         })
-        setOnlineUser(people)
-    }
+        setOnlineUser(people);
+    };
 
 
     const handleMessage = (e) => {
@@ -71,14 +61,9 @@ const ChatPage = () => {
             setMessages(prevMessages => ([...prevMessages, {...messageData}]));
         }
     };
-
-    const excludeLoggedInUser = {...onlineUser}
-    delete excludeLoggedInUser[id]
-
-    const messagesWithoutDuplicate = uniqBy(messages, '_id')
-
+    
     const sendMessage = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         ws.send(JSON.stringify({
            
                 recipient: selectedContactId,
@@ -92,13 +77,13 @@ const ChatPage = () => {
             recipient: selectedContactId,
             _id: Date.now()
         }]))
-
+        
     };
 
     useEffect(() => {
         const div = divBelowMessages.current;
         div?.scrollIntoView({behavior: 'smooth', block: 'end'})
-    },[messages])
+    },[messages]);
 
     useEffect(() => {
         const fetchMessageData = async () => {
@@ -123,51 +108,6 @@ const ChatPage = () => {
         fetchPeople();
     },[onlineUser]);
 
-    /* const handleClick = (userId, username) => {
-        setSelectedContactId(userId)
-        setSelectedContact(username)
-    } */
-
-/*     const logout = async () => {
-        try {
-            await axios.post('/api/logout');
-            setWs(null);
-            setId(null);
-            setUsername(null);
-        }catch(err){
-            console.log('Error logging out', err);
-        }
-    }; */
-
-/*     const deleteThisAccount = async (userId) => {
-        try{
-            await axios.delete(`/api/delete/${userId}`);
-            setWs(null)
-            setId(null);
-            setUsername(null);
-        }catch(err){
-            console.log('error',err);
-        }
-    } */
-    
-/* const conditionalRender = selectedContactId ? 
-        <div className='flex flex-col justify-end gap-4 text-sm'>
-            {messagesWithoutDuplicate.map((message) => (
-                <div key={message._id}
-                className={`${message.sender === id ? 
-                    'text-right bg-secondary text-white self-end' : 
-                    ' text-white bg-gray-700 self-start'} 
-                    p-2 mr-2 w-2/3 rounded-md`}
-                    >
-                    <p className='break-words text-left'>{message.text}</p>
-                </div>
-                
-            ))}
-        </div> : 
-        <div className='flex-grow flex flex-col justify-center items-center'>
-            <p>No chat selected</p>
-        </div> */
-
   return (
     <main className='w-10/12 md:w-8/12 flex flex-col md:flex-row justify-center mx-auto gap-5'>
         <section className='w-full md:w-2/6 h-[500px] bg-primary text-white flex flex-col'>
@@ -180,7 +120,7 @@ const ChatPage = () => {
                 {selectedContact && <Avatar username={selectedContact}/>}
             </div>
             <div className='flex-grow overflow-y-scroll overflow-x-hidden mt-16 my-4'>
-                <Chatbox messagesWithoutDuplicate={messagesWithoutDuplicate} sendMessage={sendMessage}/>
+                <Chatbox />
                 <div ref={divBelowMessages}></div>
             </div>
             <form className='flex gap-2 items-center' onSubmit={sendMessage}>
@@ -199,7 +139,6 @@ const ChatPage = () => {
                     </button>
                 </div>
             </form>
-            {showUpdateForm && <UpdateForm />}
         </section>
     </main>
   )

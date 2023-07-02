@@ -16,6 +16,9 @@ export default {
         'accent': '#E94560',
         'accent-fade': '#D9415A',
       },
+      fontFamily: {
+        'lobster': 'Lobster, cursive'
+      }
     },
   },
   plugins: [],

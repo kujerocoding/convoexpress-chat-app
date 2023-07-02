@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body{
+    font-family: 'Signika Negative', sans-serif;
     @apply min-h-screen bg-bg flex items-center justify-center; 
 }
 #root{

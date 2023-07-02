@@ -9,15 +9,12 @@ const App = () => {
   axios.defaults.baseURL = 'http://127.0.0.1:4000';
   axios.defaults.withCredentials = true;
 
-  const {username, id} = useGlobalContext()
+  const {username} = useGlobalContext()
   
   return (
-    
-      <div>
+      <>
         {!username ? <HomePage /> : <ChatPage />}
-      </div>
-   
-    
+      </>
   )
 }
 

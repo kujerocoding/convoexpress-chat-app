@@ -3,9 +3,9 @@ import React from 'react'
 const LoginRegisterSide = ({isLoginOrRegister, setIsLoginOrRegister}) => {
 
   const conditionalButton = isLoginOrRegister === 'login' ? 
-      <button className='p-2 w-2/3 mx-auto bg-white text-accent'
+      <button className='p-2 w-2/3 mx-auto bg-white text-accent rounded-full'
       onClick={() => setIsLoginOrRegister('register')}>Sign up</button> : 
-      <button className='p-2 w-2/3 mx-auto bg-white text-accent'
+      <button className='p-2 w-2/3 mx-auto bg-white text-accent rounded-full'
       onClick={() => setIsLoginOrRegister('login')}>Sign in</button>
 
   return (

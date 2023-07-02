@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react'
-import { useGlobalContext } from '../context/global'
+import React from 'react';
+import { useGlobalContext } from '../context/global';
+import {uniqBy} from 'lodash';
 
-const Chatbox = ({messagesWithoutDuplicate, sendMessage}) => {
+const Chatbox = () => {
 
-    const {id, selectedContactId} = useGlobalContext();
+    const {id, selectedContactId, messages} = useGlobalContext();
+    const messagesWithoutDuplicate = uniqBy(messages, '_id')
 
     const getManilaTime = (createdAt) => {
         const timestamp = new Date(createdAt);
@@ -27,7 +29,7 @@ const Chatbox = ({messagesWithoutDuplicate, sendMessage}) => {
                     p-2 mr-2 w-2/3 rounded-md`}
                     >
                     <p className='break-words text-left'>{message.text}</p>
-                    <p>{getManilaTime(message.createdAt)}</p>
+                    <p className='text-xs text-text-fade'>{getManilaTime(message.createdAt) === 'Invalid Date' ? 'Now' : getManilaTime(message.createdAt)}</p>
                 </div>
                 
             ))}
