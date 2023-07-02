@@ -2,10 +2,19 @@
 
 ConvoExpress is an easy-to-use chat app that has basic features. It was created using the MERN stack, which is a combination of popular web development technologies, and includes WebSocket for instant messaging.
 
+To test the app, follow these steps:
+
+1. Clone the repository to your local machine.
+2. Open a terminal and navigate to the backend folder. Run the command 'npm install' to install the required dependencies.
+3. In a separate terminal, navigate to the frontend folder. Again, run 'npm install' to install the necessary dependencies.
+4. Start the backend server by running 'npm start' in the backend terminal.
+5. In the frontend terminal, run 'npm run dev' to start the development server for the frontend.
+6. To test the application, you can use the following login credentials: username: charlie, password: charlie. Alternatively, you can register your own account.
+
 ## Table of contents
 
 - [Overview](#overview)
-  - [The feautures](#the-features)
+  - [The features](#the-features)
   - [Screenshot](#screenshot)
 - [My process](#my-process)
   - [Built with](#built-with)
