@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useGlobalContext } from '../context/global'
 
-const Chatbox = ({messagesWithoutDuplicate}) => {
+const Chatbox = ({messagesWithoutDuplicate, sendMessage}) => {
 
     const {id, selectedContactId} = useGlobalContext();
+
+    const getManilaTime = (createdAt) => {
+        const timestamp = new Date(createdAt);
+        const inManilaTime = timestamp.toLocaleString('en-US', {
+            timeZone: 'Asia/Manila',
+            hour: 'numeric',
+            minute: 'numeric',
+        });
+        return inManilaTime;
+    };
 
   return (
     <>
@@ -17,6 +27,7 @@ const Chatbox = ({messagesWithoutDuplicate}) => {
                     p-2 mr-2 w-2/3 rounded-md`}
                     >
                     <p className='break-words text-left'>{message.text}</p>
+                    <p>{getManilaTime(message.createdAt)}</p>
                 </div>
                 
             ))}

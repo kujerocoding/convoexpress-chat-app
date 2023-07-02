@@ -93,7 +93,7 @@ const ChatPage = () => {
             _id: Date.now()
         }]))
 
-    }
+    };
 
     useEffect(() => {
         const div = divBelowMessages.current;
@@ -180,7 +180,7 @@ const ChatPage = () => {
                 {selectedContact && <Avatar username={selectedContact}/>}
             </div>
             <div className='flex-grow overflow-y-scroll overflow-x-hidden mt-16 my-4'>
-                <Chatbox messagesWithoutDuplicate={messagesWithoutDuplicate}/>
+                <Chatbox messagesWithoutDuplicate={messagesWithoutDuplicate} sendMessage={sendMessage}/>
                 <div ref={divBelowMessages}></div>
             </div>
             <form className='flex gap-2 items-center' onSubmit={sendMessage}>
